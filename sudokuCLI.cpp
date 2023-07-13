@@ -30,9 +30,52 @@ void SudokuCLI::display() {
     std::cout << h_delimiter;
 };
 
+std::string SudokuCLI::prompt() {
+    std::cout << ">>> ";
+    std::string input = "";
+    std::getline(std::cin, input);
+    return input;
+};
+
 void SudokuCLI::clear() {
-    char input = std::cin.get();
     int n;
     for (n = 0; n < 10; n++)
       printf( "\n\n\n\n\n\n\n\n\n\n" );
+};
+
+//actions
+//q - quit
+//u - undo
+//a x y z - add z at coordinates (x,y)
+//c - clear board
+
+void SudokuCLI::run() {
+    while (true) {
+        display();
+        std::string action = prompt();
+        if (action.compare("q") == 0){
+            break;
+        } else if (action.compare("u") == 0) {
+            sudokuPuzzle.undo();
+        } else if (action.compare("r") == 0) {
+            sudokuPuzzle.clear();
+        } else if (action[0] == 'a') {
+            if (action.length() < 7){continue;}
+            int row = (int)action[2] - 48;
+            int column = (int)action[4] - 48;
+            int value = (int)action[6] - 48;
+            int result = sudokuPuzzle.add(row, column, value);
+            if (result == -1) {
+                std::cout << "Bad coordinates\\value.\n";
+                continue;
+            }
+            if (result == -2) {
+                std::cout << "Cannot place value.\n";
+                continue;
+            }
+        } else {
+            continue;
+        }
+        clear();
+    }
 };

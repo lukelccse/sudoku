@@ -8,13 +8,17 @@
 
 #ifndef SUDOKU_CLI
 #define SUDOKU_CLI
-#include "sudoku.h"
+#include <string>
+#include <iostream>
+#include "sudokuPuzzle.h"
 class SudokuCLI {
     private:
         SudokuPuzzle &sudokuPuzzle;
-    public:
-        SudokuCLI(SudokuPuzzle &sudoku):sudokuPuzzle(sudoku) {}
         void display();
         void clear();
+        std::string prompt();
+    public:
+        SudokuCLI(SudokuPuzzle &sudoku):sudokuPuzzle(sudoku) {}
+        void run();
 };
 #endif

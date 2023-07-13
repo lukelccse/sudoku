@@ -34,7 +34,7 @@ int SudokuPuzzle::add(int row, int column, int value){
         return -1;
     }
     //check play is valid
-    if (!isValid(row, column, value)) {return 1;}
+    if (!isValid(row, column, value)) {return -2;}
     //update grid
     addHistory(row, column, value, grid[row][column]);
     grid[row][column] = value;
