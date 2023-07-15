@@ -6,6 +6,7 @@
  * DESC: contains the sudoku CLI implementation
  ********************/
 #include "sudokuCLI.h"
+#include "sudokuSolver.h"
 #include <string>
 #include <iostream>
 
@@ -48,6 +49,7 @@ void SudokuCLI::clear() {
 //u - undo
 //a x y z - add z at coordinates (x,y)
 //c - clear board
+//s - solve
 
 void SudokuCLI::run() {
     while (true) {
@@ -59,6 +61,10 @@ void SudokuCLI::run() {
             sudokuPuzzle.undo();
         } else if (action.compare("r") == 0) {
             sudokuPuzzle.clear();
+        } else if (action.compare("s") == 0) {
+            SudokuSolver sudokuSolver(sudokuPuzzle);
+            if(sudokuSolver.solve()){std::cout << "Solution found.\n";}
+            else {std::cout << "No solution.\n";}
         } else if (action[0] == 'a') {
             if (action.length() < 7){continue;}
             int row = (int)action[2] - 48;

@@ -21,6 +21,17 @@ SudokuPuzzle::SudokuPuzzle() {
     prev_move = NULL;
 };
 
+SudokuPuzzle::SudokuPuzzle(SudokuPuzzle& newPuzzle) {
+    //initialise all grid positions to 0
+    for(int i=0; i<SIZE; i++) {
+        for(int j=0; j<SIZE; j++){
+            grid[i][j] = newPuzzle.getCoordinate(i, j);
+        }
+    }
+    //No history
+    prev_move = NULL;
+};
+
 SudokuPuzzle::~SudokuPuzzle() {
     while(prev_move != NULL) {
         removeHistory(prev_move);

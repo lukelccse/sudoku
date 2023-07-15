@@ -25,6 +25,7 @@ class SudokuPuzzle {
         void removeHistory(Move* move);
     public:
         SudokuPuzzle();
+        SudokuPuzzle(SudokuPuzzle& newPuzzle);
         ~SudokuPuzzle();
         int add(int row, int column, int value);
         void clear();
