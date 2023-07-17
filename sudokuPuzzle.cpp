@@ -14,7 +14,7 @@ SudokuPuzzle::SudokuPuzzle() {
     //initialise all grid positions to 0
     for(int i=0; i<SIZE; i++) {
         for(int j=0; j<SIZE; j++){
-            grid[i][j] = 0;
+            grid[i][j] = UNASSINGED;
         }
     }
     //No history
@@ -41,11 +41,11 @@ SudokuPuzzle::~SudokuPuzzle() {
 int SudokuPuzzle::add(int row, int column, int value){
     //check for correct coordinates
     if ((row < 0 || row > SIZE) || (column < 0 || column > SIZE) ||
-        (value < 1 || value > 9)){
+        (value < UNASSINGED || value > SIZE)){
         return -1;
     }
     //check play is valid
-    if (!isValid(row, column, value)) {return -2;}
+    if (!isValid(row, column, value) && value != UNASSINGED) {return -2;}
     //update grid
     addHistory(row, column, value, grid[row][column]);
     grid[row][column] = value;

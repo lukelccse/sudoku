@@ -11,6 +11,7 @@
 #include "move.h"
 #define SIZE 9
 #define SUB_SIZE 3
+#define UNASSINGED 0
 
 class SudokuPuzzle {
     private:

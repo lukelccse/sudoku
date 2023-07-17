@@ -16,11 +16,11 @@
 
 class SudokuSolver {
     private:
-        void findUnnasngedCoordinates(SudokuPuzzle &sudokuPuzzle, int &row, int &column);
-        bool backtrackingSolve(SudokuPuzzle &sudokuPuzzle);
+        void findUnnasngedCoordinates(int &row, int &column);
+        bool backtrackingSolve();
     public:
         SudokuPuzzle &sudokuPuzzle;
         SudokuSolver(SudokuPuzzle &sudoku):sudokuPuzzle(sudoku) {}
-        bool solve(); 
+        bool solve();
 };
 #endif

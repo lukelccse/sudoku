@@ -16,7 +16,7 @@
  3. If no trials are successful, there is no solution. 
 */
 
-void SudokuSolver::findUnnasngedCoordinates(SudokuPuzzle &sudokuPuzzle, int &row, int &column){
+void SudokuSolver::findUnnasngedCoordinates(int &row, int &column){
     for (int i=0; i<SIZE; i++){
         for (int j=0; j<SIZE; j++){
             if (sudokuPuzzle.getCoordinate(i, j) == UNNASINGED){
@@ -27,26 +27,27 @@ void SudokuSolver::findUnnasngedCoordinates(SudokuPuzzle &sudokuPuzzle, int &row
     }
 };
 
-bool SudokuSolver::backtrackingSolve(SudokuPuzzle &sudokuPuzzle){
+bool SudokuSolver::backtrackingSolve(){
     int row = -1;
     int column = -1;
-    findUnnasngedCoordinates(sudokuPuzzle, row, column);
+    findUnnasngedCoordinates(row, column);
 
     //puzzle is solved
     if (row == -1 && column == -1){return true;}
 
     for (int trial=1; trial<=SIZE; trial++){
         if (sudokuPuzzle.add(row, column, trial) == 0){
-            SudokuPuzzle newPuzzle = sudokuPuzzle;
-            if(backtrackingSolve(newPuzzle)) {
-                sudokuPuzzle = newPuzzle;
+            if(backtrackingSolve()) {
                 return true;
-            } else {sudokuPuzzle.add(row, column, UNNASINGED);}
+            }
         }
     }
+    sudokuPuzzle.add(row, column, UNNASINGED);
     return false;
 };
 
+/*How can we improve on this backtracking?*/
+
 bool SudokuSolver::solve() {
-    return backtrackingSolve(sudokuPuzzle);
+    return backtrackingSolve();
 };
