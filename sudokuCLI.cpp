@@ -17,8 +17,8 @@ void SudokuCLI::display() {
         std::cout << " |";
         for(int j=0; j<SIZE; j++){
             std::cout << " ";
-            if (sudokuPuzzle.getCoordinate(i,j) == 0) {std::cout << ".";}
-            else {std::cout << sudokuPuzzle.getCoordinate(i,j);}
+            if (sudokuPuzzle.getValue(i,j) == 0) {std::cout << ".";}
+            else {std::cout << sudokuPuzzle.getValue(i,j);}
             if ((j+1)%3 == 0 && j+1 != SIZE){
                 std::cout << " |";
             }

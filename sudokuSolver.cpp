@@ -19,7 +19,7 @@
 void SudokuSolver::findUnnasngedCoordinates(int &row, int &column){
     for (int i=0; i<SIZE; i++){
         for (int j=0; j<SIZE; j++){
-            if (sudokuPuzzle.getCoordinate(i, j) == UNNASINGED){
+            if (sudokuPuzzle.getValue(i, j) == UNNASINGED){
                 row = i; column = j;
                 return;
             }
@@ -30,7 +30,9 @@ void SudokuSolver::findUnnasngedCoordinates(int &row, int &column){
 bool SudokuSolver::backtrackingSolve(){
     int row = -1;
     int column = -1;
-    findUnnasngedCoordinates(row, column);
+    /*How can we improve on this backtracking?*/
+    //findUnnasngedCoordinates(row, column);
+    sudokuPuzzle.getOptimalCoordinates(row, column);
 
     //puzzle is solved
     if (row == -1 && column == -1){return true;}
@@ -45,8 +47,6 @@ bool SudokuSolver::backtrackingSolve(){
     sudokuPuzzle.add(row, column, UNNASINGED);
     return false;
 };
-
-/*How can we improve on this backtracking?*/
 
 bool SudokuSolver::solve() {
     return backtrackingSolve();
