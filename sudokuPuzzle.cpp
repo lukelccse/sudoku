@@ -178,7 +178,7 @@ void SudokuPuzzle::updateCounters(int row, int column, int new_value, int old_va
 // Increment a Counter
 void SudokuPuzzle::incrementCounter(Counter &counter, int index){
     //increment the counter and check if it is larger than the max
-    if (++counter.counts[index] >= counter.max){
+    if (++counter.counts[index] > counter.max){
         if (counter.counts[index] == SIZE) {
             //set to -1 to move the index to the next largest
             counter.filled += 1;
@@ -206,9 +206,9 @@ void SudokuPuzzle::deincrementCounter(Counter &counter, int index){
 
 // Sets the max value for a Counter object.
 void SudokuPuzzle::findNewMax(Counter &counter){
-    int new_max = 0;
+    int new_max = -1;
     for (int i=0; i<SIZE; i++){
-        if (counter.counts[i] >= new_max){
+        if (counter.counts[i] > new_max){
             counter.max = counter.counts[i];
             new_max = counter.max;
             counter.index = i;
@@ -231,10 +231,10 @@ void SudokuPuzzle::getOptimalCoordinates(int &row, int&column) {
     if (row_counter.max >= column_counter.max){
         // return an unassinged coordinate in that row
         row = row_counter.index;
-        int free_column_counts = 0;
+        int free_column_counts = -1;
         for (int i=0; i<SIZE; i++){
             if ((getValue(row_counter.index, i) == UNASSINGED) &&
-                (column_counter.counts[i] >= free_column_counts))
+                (column_counter.counts[i] > free_column_counts))
             {
                 column = i;
                 free_column_counts = column_counter.counts[i];
@@ -243,10 +243,10 @@ void SudokuPuzzle::getOptimalCoordinates(int &row, int&column) {
     } else {
         // return an unassinged coordinate in the column
         column = column_counter.index;
-        int free_row_counts = 0;
+        int free_row_counts = -1;
         for (int i=0; i<SIZE; i++){
             if ((getValue(i, column_counter.index) == UNASSINGED) &&
-                (row_counter.counts[i] >= free_row_counts))
+                (row_counter.counts[i] > free_row_counts))
             {
                 row = i;
                 free_row_counts = row_counter.counts[i];

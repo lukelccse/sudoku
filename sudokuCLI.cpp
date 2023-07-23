@@ -63,8 +63,8 @@ void SudokuCLI::run() {
             sudokuPuzzle.clear();
         } else if (action.compare("s") == 0) {
             SudokuSolver sudokuSolver(sudokuPuzzle);
-            if(sudokuSolver.solve()){std::cout << "Solution found.\n";}
-            else {std::cout << "No solution.\n";}
+            if(sudokuSolver.solve()){std::cout << "Solution found.\n";continue;}
+            else {std::cout << "No solution.\n";continue;}
         } else if (action[0] == 'a') {
             if (action.length() < 7){continue;}
             int row = (int)action[2] - 48;
