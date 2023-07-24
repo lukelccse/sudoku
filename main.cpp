@@ -8,12 +8,14 @@
 #include <iostream>
 #include "sudokuPuzzle.h"
 #include "sudokuCLI.h"
+#include "sudokuCreator.h"
 
 int main() {
   std::cout << " Welcome to Su-Do-Ku!\n";
+  SudokuCreator sc;
   SudokuPuzzle sudoku;
+  sc.getNewPuzzle(sudoku, ' ');
   SudokuCLI cli(sudoku);
-  sudoku.add(0, 0, 4);
   cli.run();
   return 0;
 }

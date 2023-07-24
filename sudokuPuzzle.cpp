@@ -2,7 +2,7 @@
 /********************
  * AUTHOR: lukelccse
  * DATE CREATED: 28.06.23
- * DATE MODIFIED: 13.07.23
+ * DATE MODIFIED: 24.07.23
  * FILE: sudokuPuzzle.cpp
  * DESC: contains the sudokupuzzle functions
  ********************/
@@ -24,6 +24,22 @@ SudokuPuzzle::SudokuPuzzle() {
     prev_move = NULL;
 };
 
+// Copy constructor.
+SudokuPuzzle::SudokuPuzzle(SudokuPuzzle &other){
+    // initialise all grid positions to 0
+    for(int i=0; i<SIZE; i++) {
+        for(int j=0; j<SIZE; j++){
+            grid[i][j] = other.getValue(i, j);
+        }
+    }
+    // copy all Counter
+    for(int i=0; i<N_COUNTERS; i++){
+        counters[i] = other.counters[i];
+    }
+    // no history
+    prev_move = NULL;
+};
+
 // Deconstructor.
 SudokuPuzzle::~SudokuPuzzle() {
     removeAllHistory();
@@ -39,6 +55,11 @@ void SudokuPuzzle::initialiseCounters(){
         counter.index = 0;
         counter.filled = 0;
     }
+};
+
+// assign counters
+void assignCounters(Counter &row_counter, Counter &column_counter){
+
 };
 
 // Adds a value to the sudoku grid.

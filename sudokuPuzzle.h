@@ -13,13 +13,13 @@
 #define SIZE 9
 #define SUB_SIZE 3
 #define UNASSINGED 0
+#define N_COUNTERS 2
 
 class SudokuPuzzle {
     private:
         int grid[SIZE][SIZE];
         Move* prev_move;
-        Counter row_counter; Counter column_counter;
-        Counter counters[2] = {row_counter, column_counter};
+        Counter counters[N_COUNTERS];
         void initialiseCounters();
         bool isValid(int row, int column, int value);
         bool isRowValid(int row, int value);
@@ -35,8 +35,9 @@ class SudokuPuzzle {
         void findNewMax(Counter &counter);
     public:
         SudokuPuzzle();
-        SudokuPuzzle(SudokuPuzzle& newPuzzle);
+        SudokuPuzzle(SudokuPuzzle &other);
         ~SudokuPuzzle();
+        void assignCounters(Counter &row_counter, Counter &column_counter);
         int add(int row, int column, int value);
         void clear();
         void undo();
