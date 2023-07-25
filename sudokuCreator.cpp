@@ -34,17 +34,18 @@ SudokuCreator::SudokuCreator(){
     }
     // Provide a seed value
     std::srand((unsigned) time(NULL));
+    //create difficuilty map
+    char lvl_names[] = {'E', 'M', 'H', 'I'};
+    int n_holes[] = {31, 45, 49, 53};
+    for(int i=0; i<sizeof(lvl_names); i++){
+        lvl[lvl_names[i]] = n_holes[i];
+    }
 };
 
-// 1 - 31
-// 2 - 45
-// 3 - 49
-// 4 - 53
-// 5 - 57
 
 void SudokuCreator::getNewPuzzle(SudokuPuzzle &new_puzzle, char difficuilty_lvl){
     generateSudoRandomGrid(new_puzzle);
-    digHoles(new_puzzle, 53);
+    digHoles(new_puzzle, lvl[difficuilty_lvl]);
     shuffle(new_puzzle);
 };
 

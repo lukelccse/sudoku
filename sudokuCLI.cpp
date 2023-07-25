@@ -7,8 +7,17 @@
  ********************/
 #include "sudokuCLI.h"
 #include "sudokuSolver.h"
+#include "sudokuCreator.h"
 #include <string>
 #include <iostream>
+#include <set>
+
+SudokuCLI::SudokuCLI(SudokuPuzzle &sudoku): sudokuPuzzle(sudoku){
+    char levels[] = {'E', 'M', 'H', 'I', 'N'};
+    for (char lvl : levels){
+        difficuilty_lvl.insert(lvl);
+    }
+};
 
 void SudokuCLI::display() {
     std::string h_delimiter = " +-------+-------+-------+\n";
@@ -44,6 +53,15 @@ void SudokuCLI::clear() {
       printf( "\n\n\n\n\n\n\n\n\n\n" );
 };
 
+void SudokuCLI::createPuzzle() {
+    std::cout << "Select Difficuilty: E-Easy, M-Medium, H-Hard, I-Impossible, N-Empty\n";
+    std::string option = prompt();
+    if (difficuilty_lvl.find(option[0]) == difficuilty_lvl.end()){createPuzzle();}
+    SudokuCreator sudoku_creator;
+    if (option[0] == 'N'){return;}
+    sudoku_creator.getNewPuzzle(sudokuPuzzle, option[0]);
+};
+
 //actions
 //q - quit
 //u - undo
@@ -52,6 +70,7 @@ void SudokuCLI::clear() {
 //s - solve
 
 void SudokuCLI::run() {
+    createPuzzle();
     while (true) {
         display();
         std::string action = prompt();

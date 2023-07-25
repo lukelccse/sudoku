@@ -8,6 +8,7 @@
 
 #ifndef SUDOKUCREATOR
 #define SUDOKUCREATOR
+#include <map>
 #include "sudokuPuzzle.h"
 #include "sudokuSolver.h"
 #define SIZE 9
@@ -20,6 +21,7 @@ class SudokuCreator {
         void shuffle(SudokuPuzzle &puzzle);
     private:
         bool holes[SIZE][SIZE];
+        std::map <char, int> lvl;
         void generateSudoRandomGrid(SudokuPuzzle &new_puzzle);
         void randomiseArray(int (&array)[SIZE]);
         void digHoles(SudokuPuzzle &puzzle, int N);
