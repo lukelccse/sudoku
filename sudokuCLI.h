@@ -10,15 +10,20 @@
 #define SUDOKU_CLI
 #include <string>
 #include <set>
+#include <map>
 #include "sudokuPuzzle.h"
+#include "Actions.h"
 class SudokuCLI {
     private:
+        std::map<char, Actions> action_map;
         SudokuPuzzle &sudokuPuzzle;
         std::set<char> difficuilty_lvl;
         void display();
         void clear();
         std::string prompt();
         void createPuzzle();
+        std::string getColumnSeperator();
+        int parseInput(std::string action);
     public:
         SudokuCLI(SudokuPuzzle &sudoku);
         void run();

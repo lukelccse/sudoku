@@ -23,7 +23,7 @@ $(SOLVER).o: $(SOLVER).cpp $(SOLVER).h
 $(CREATOR).o: $(CREATOR).cpp $(CREATOR).h
 	$(COMPILER) $(COMPILERFLAGS) $(CREATOR).cpp
 
-$(CLI).o: $(CLI).cpp $(CLI).h
+$(CLI).o: $(CLI).cpp $(CLI).h Actions.h char2enum.h
 	$(COMPILER) $(COMPILERFLAGS) $(CLI).cpp
 
 clean:
