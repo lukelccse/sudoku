@@ -1,14 +1,14 @@
 /********************
  * AUTHOR: lukelccse
  * DATE CREATED: 26.07.23
- * DATE MODIFIED: 26.07.23
- * FILE: sudokuCLI.cpp
- * DESC: contains the char2enum datatype for the sudokuCli class
+ * DATE MODIFIED: 01.08.23
+ * FILE: char2enum.h
+ * DESC: char2enum struct
  ********************/
 
 #ifndef CHAR2ENUM
 #define CHAR2ENUM
-#include "Actions.h"
+#include "actions.h"
 struct char2enum {
     char a;
     Actions action;

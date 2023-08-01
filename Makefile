@@ -1,8 +1,8 @@
 MAIN = main
-SUDOKU = sudokuPuzzle
-CLI = sudokuCLI
-SOLVER = sudokuSolver
-CREATOR = sudokuCreator
+SUDOKU = SudokuPuzzle
+CLI = SudokuCLI
+SOLVER = SudokuSolver
+CREATOR = SudokuCreator
 COMPILER = g++
 COMPILERFLAGS = -c --std=c++11
 
@@ -23,7 +23,7 @@ $(SOLVER).o: $(SOLVER).cpp $(SOLVER).h
 $(CREATOR).o: $(CREATOR).cpp $(CREATOR).h
 	$(COMPILER) $(COMPILERFLAGS) $(CREATOR).cpp
 
-$(CLI).o: $(CLI).cpp $(CLI).h Actions.h char2enum.h
+$(CLI).o: $(CLI).cpp $(CLI).h actions.h char2enum.h
 	$(COMPILER) $(COMPILERFLAGS) $(CLI).cpp
 
 clean:

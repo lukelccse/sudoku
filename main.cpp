@@ -1,9 +1,9 @@
 /********************
  * AUTHOR: lukelccse
  * DATE CREATED: 13.07.23
- * DATE MODIFIED: 13.07.23
- * FILE: sudokuCLI.cpp
- * DESC: contains the sudoku CLI implementation
+ * DATE MODIFIED: 01.08.23
+ * FILE: main.cpp
+ * DESC: entry point to run program
  ********************/
 #include <iostream>
 #include "sudokuPuzzle.h"
@@ -14,5 +14,6 @@ int main() {
   SudokuPuzzle sudoku;
   SudokuCLI cli(sudoku);
   cli.run();
-  return 0;
+  std::cout << "Thanks for playing!\n";
+  return EXIT_SUCCESS;
 }

@@ -1,9 +1,9 @@
 /********************
  * AUTHOR: lukelccse
  * DATE CREATED: 28.06.23
- * DATE MODIFIED: 16.07.23
- * FILE: sudokuPuzzle.h
- * DESC: contains the counter class header file
+ * DATE MODIFIED: 01.08.23
+ * FILE: counter.h
+ * DESC: Counter struct
  ********************/
 
 #ifndef COUNTER
