@@ -1,14 +1,14 @@
 /********************
  * AUTHOR: lukelccse
  * DATE CREATED: 23.07.23
- * DATE MODIFIED: 23.07.23
- * FILE: sudokuCreator.cpp
- * DESC: contains the sudokuCreator implementation
+ * DATE MODIFIED: 01.08.23
+ * FILE: SudokuCreator.cpp
+ * DESC: SudokuCreator implementation
  ********************/
 
 /* How do we create a unique sudoku puzzle of varying difficulty?
 * Inspiration: https://zhangroup.aporc.org/images/files/Paper_3485.pdf
-* 1. Generate a some what random sudoku board.
+* 1. Generate a somewhat random sudoku board.
 * 2. Dig a "hole" by removing a gird position.
 * 3. Check that the puzzle can be solved uniquely using a backtracking solver.
 * 4. If the puzzle has more than one solution fill the hole and continue to find 
@@ -21,50 +21,53 @@
 #include <random>
 #include <iostream>
 #include <cstdlib>
-#include "sudokuCreator.h"
-#include "sudokuPuzzle.h"
-#include "sudokuSolver.h"
+#include "SudokuCreator.h"
+#define EASY 31
+#define MEDIUM 45
+#define HARD 49
+#define IMPOSSIBLE 53 
 
+// Constructor.
 SudokuCreator::SudokuCreator(){
-    //init holes matrix
+    // holes matrix
     for(int i=0; i<SIZE; i++){
         for(int j=0; j<SIZE; j++){
             holes[i][j] = true;
         }
     }
-    // Provide a seed value
+    // provide a seed value
     std::srand((unsigned) time(NULL));
-    //create difficuilty map
+    // create difficuilty map
     char lvl_names[] = {'E', 'M', 'H', 'I'};
-    int n_holes[] = {31, 45, 49, 53};
-    for(int i=0; i<sizeof(lvl_names); i++){
+    int n_holes[] = {EASY, MEDIUM, HARD, IMPOSSIBLE};
+    for (int i=0; i<sizeof(lvl_names); i++){
         lvl[lvl_names[i]] = n_holes[i];
     }
 };
 
-
+// Generates a new sudoku puzzle corrosponding to the difficuity level.
 void SudokuCreator::getNewPuzzle(SudokuPuzzle &new_puzzle, char difficuilty_lvl){
     generateSudoRandomGrid(new_puzzle);
     digHoles(new_puzzle, lvl[difficuilty_lvl]);
     shuffle(new_puzzle);
 };
 
-//Generates a sudo randomly solved sudoku puzzle.
+// Creates a sudo random solved sudoku puzzle from a diagional seed array.
 void SudokuCreator::generateSudoRandomGrid(SudokuPuzzle &new_puzzle){
     //generate a random combination of of numbers in [0, SIZE]
     int seed_array[SIZE];
     randomiseArray(seed_array);
     //fill the diagonals of a puzzle
-    for(int i=0; i<SIZE; i++){new_puzzle.add(i, i, seed_array[i]);}
+    for (int i=0; i<SIZE; i++){new_puzzle.add(i, i, seed_array[i]);}
     //solve the puzzle
     SudokuSolver solver(new_puzzle);
     solver.solve();
 };
 
 // Initialises an array of size=SIZE with a random combination
-// of numbers from [0, SIZE]
+// of the set [0, SIZE]
 void SudokuCreator::randomiseArray(int (&array)[SIZE]){
-    for(int i=0; i<SIZE; i++){array[i] = i+1;}
+    for (int i=0; i<SIZE; i++){array[i] = i+1;}
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(&array[0], &array[SIZE], g);
@@ -73,7 +76,7 @@ void SudokuCreator::randomiseArray(int (&array)[SIZE]){
 // Dig N holes into a puzzle.
 void SudokuCreator::digHoles(SudokuPuzzle &puzzle, int N) {
     int holes_dug = 0;
-    while(holes_dug < N){
+    while (holes_dug < N){
         //dig hole
         int row = -1;
         int column = -1;
@@ -92,11 +95,11 @@ void SudokuCreator::digHoles(SudokuPuzzle &puzzle, int N) {
 // Check there is only one solution for a puzzle
 bool SudokuCreator::uniqueSolution(SudokuPuzzle &puzzle, int row, int column){
     int n_solutions = 0;
-    for(int i=0; i<SIZE; i++){
+    for (int i=0; i<SIZE; i++){
         if (puzzle.add(row, column, i+1) != 0) {continue;}
         SudokuPuzzle copy_puzzle = puzzle;
         SudokuSolver solver(copy_puzzle);
-        if(solver.solve()) {n_solutions++;}
+        if (solver.solve()) {n_solutions++;}
     }
     puzzle.add(row, column, UNASSINGED);
     // only one solution
@@ -106,9 +109,9 @@ bool SudokuCreator::uniqueSolution(SudokuPuzzle &puzzle, int row, int column){
 
 // Get grid coordinates to dig.
 void SudokuCreator::getCoordinates(int &row, int &column){
-    for(int i=0; i<SIZE; i++){
-        for(int j=0; j<SIZE; j++){
-            if(holes[i][j]){
+    for (int i=0; i<SIZE; i++){
+        for (int j=0; j<SIZE; j++){
+            if (holes[i][j]){
                 row=i; column=j;
                 holes[i][j] = false;
                 return;
@@ -130,8 +133,8 @@ void SudokuCreator::shuffle(SudokuPuzzle &puzzle){
 
 // Place sudoku puzzle values into a grid for easy manipulation.
 void SudokuCreator::fillGrid(SudokuPuzzle &puzzle, int (&grid)[SIZE][SIZE]){
-    for(int i=0; i<SIZE; i++){
-        for(int j=0; j<SIZE; j++){
+    for (int i=0; i<SIZE; i++){
+        for (int j=0; j<SIZE; j++){
             grid[i][j] = puzzle.getValue(i, j);
         }
     }
@@ -140,8 +143,8 @@ void SudokuCreator::fillGrid(SudokuPuzzle &puzzle, int (&grid)[SIZE][SIZE]){
 // Place grid values into sudoku puzzle.
 void SudokuCreator::fillSudoku(SudokuPuzzle &puzzle, int (&grid)[SIZE][SIZE]){
     puzzle.clear();
-    for(int i=0; i<SIZE; i++){
-        for(int j=0; j<SIZE; j++){
+    for (int i=0; i<SIZE; i++){
+        for (int j=0; j<SIZE; j++){
             puzzle.add(i, j, grid[i][j]);
         }
     }
@@ -153,15 +156,15 @@ void SudokuCreator::twoDigitsPropagation(int (&grid)[SIZE][SIZE]){
     int rand_array[SIZE];
     randomiseArray(rand_array);
     // swap the values by grouping the array in twos
-    for(int i=0; i<(SIZE-1); i+=2){
+    for (int i=0; i<(SIZE-1); i+=2){
         swapValues(grid, rand_array[i], rand_array[i+1]);
     }
 };
 
 // Swap two values on the grid.
 void SudokuCreator::swapValues(int (&grid)[SIZE][SIZE], int value_one, int value_two){
-    for(int i=0; i<SIZE; i++){
-        for(int j=0; j<SIZE; j++){
+    for (int i=0; i<SIZE; i++){
+        for (int j=0; j<SIZE; j++){
             if (grid[i][j] == value_one){grid[i][j] = value_two;}
             else if (grid[i][j] == value_two){grid[i][j] = value_one;}
         }
@@ -189,7 +192,7 @@ int SudokuCreator::randomSubSizeNumber(){
 // swaps two columns
 void SudokuCreator::swapColumns(int (&grid)[SIZE][SIZE], int column_one, int column_two){
     if (column_one == column_two) {return;}
-    for(int i=0; i<SIZE; i++){
+    for (int i=0; i<SIZE; i++){
         int tmp = grid[i][column_one];
         grid[i][column_one] = grid[i][column_two];
         grid[i][column_two] = tmp;
@@ -201,7 +204,7 @@ void SudokuCreator::swapBlocksPropagation(int (&grid)[SIZE][SIZE]){
     //swap blocks
     int block_one = randomSubSizeNumber();
     int block_two = randomSubSizeNumber();
-    if(block_one == block_two){return;}
+    if (block_one == block_two){return;}
     for (int i=0; i < SUB_SIZE; i++){
         //swap corresponding columns
         int column_one = block_one * SUB_SIZE + i;
@@ -212,7 +215,7 @@ void SudokuCreator::swapBlocksPropagation(int (&grid)[SIZE][SIZE]){
 // Rotate the grid a number of times clockwise.
 void SudokuCreator::gridRollPropagation(int (&grid)[SIZE][SIZE]){
     int n_rotations = (std::rand() % 4); // [0, 1, 2, 3]
-    for(int i=0; i<n_rotations; i++){
+    for (int i=0; i<n_rotations; i++){
         rotateGrid(grid);
     }
 };
@@ -221,14 +224,14 @@ void SudokuCreator::gridRollPropagation(int (&grid)[SIZE][SIZE]){
 void SudokuCreator::rotateGrid(int (&grid)[SIZE][SIZE]){
     //rotate values into the new grid
     int tmp_grid[SIZE][SIZE];
-    for(int x=0; x<SIZE; x++){
-        for(int y=0; y<SIZE; y++){
+    for (int x=0; x<SIZE; x++){
+        for (int y=0; y<SIZE; y++){
             tmp_grid[x][y] = grid[SIZE-y-1][x];
         }
     }
     //copy to original grid
-    for(int i=0; i<SIZE; i++){
-        for(int j=0; j<SIZE; j++){
+    for (int i=0; i<SIZE; i++){
+        for (int j=0; j<SIZE; j++){
             grid[i][j] = tmp_grid[i][j];
         }
     }

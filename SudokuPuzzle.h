@@ -1,9 +1,9 @@
 /********************
  * AUTHOR: lukelccse
  * DATE CREATED: 28.06.23
- * DATE MODIFIED: 13.07.23
- * FILE: sudokuPuzzle.h
- * DESC: contains the sudokupuzzle class header file
+ * DATE MODIFIED: 31.07.23
+ * FILE: SudokuPuzzle.h
+ * DESC: SudokuPuzzle header file
  ********************/
 
 #ifndef SUDOKUPUZZLE
@@ -18,8 +18,10 @@
 class SudokuPuzzle {
     private:
         int grid[SIZE][SIZE];
+        bool frozen[SIZE][SIZE];
         Move* prev_move;
         Counter counters[N_COUNTERS];
+        bool record_history;
         void initialiseCounters();
         bool isValid(int row, int column, int value);
         bool isRowValid(int row, int value);
@@ -33,15 +35,19 @@ class SudokuPuzzle {
         void incrementCounter(Counter &counter, int index);
         void deincrementCounter(Counter &counter, int index);
         void findNewMax(Counter &counter);
+        bool isFrozen(int row, int column);
     public:
         SudokuPuzzle();
         SudokuPuzzle(SudokuPuzzle &other);
         ~SudokuPuzzle();
-        void assignCounters(Counter &row_counter, Counter &column_counter);
         int add(int row, int column, int value);
         void clear();
+        void reset();
         void undo();
         int getValue(int row, int column);
         void getOptimalCoordinates(int &row, int&column);
+        void startRecordingHistory();
+        void stopRecordingHistory();
+        void freezePuzzle();
 };
 #endif

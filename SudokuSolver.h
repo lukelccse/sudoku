@@ -2,8 +2,8 @@
  * AUTHOR: lukelccse
  * DATE CREATED: 28.06.23
  * DATE MODIFIED: 13.07.23
- * FILE: sudokuSolver.h
- * DESC: contains the sudokupuzzle header file
+ * FILE: SudokuSolver.h
+ * DESC: SudokuSolver header file
  ********************/
 
 #ifndef SUDOU_SOLVER
@@ -12,7 +12,7 @@
 #define SUB_SIZE 3
 #define UNNASINGED 0
 #define N_COORDINATES 2
-#include "sudokuPuzzle.h"
+#include "SudokuPuzzle.h"
 
 class SudokuSolver {
     private:

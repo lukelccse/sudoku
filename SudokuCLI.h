@@ -11,8 +11,8 @@
 #include <string>
 #include <set>
 #include <map>
-#include "sudokuPuzzle.h"
-#include "Actions.h"
+#include "SudokuPuzzle.h"
+#include "actions.h"
 class SudokuCLI {
     private:
         std::map<char, Actions> action_map;
@@ -24,6 +24,7 @@ class SudokuCLI {
         void createPuzzle();
         std::string getColumnSeperator();
         int parseInput(std::string action);
+        void help();
     public:
         SudokuCLI(SudokuPuzzle &sudoku);
         void run();

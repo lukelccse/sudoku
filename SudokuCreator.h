@@ -1,16 +1,16 @@
 /********************
  * AUTHOR: lukelccse
  * DATE CREATED: 23.07.23
- * DATE MODIFIED: 23.07.23
- * FILE: sudokuCreator.cpp
- * DESC: contains the sudokuCreator header
+ * DATE MODIFIED: 01.08.23
+ * FILE: SudokuCreator.h
+ * DESC: SudokuCreator header
  ********************/
 
 #ifndef SUDOKUCREATOR
 #define SUDOKUCREATOR
 #include <map>
-#include "sudokuPuzzle.h"
-#include "sudokuSolver.h"
+#include "SudokuPuzzle.h"
+#include "SudokuSolver.h"
 #define SIZE 9
 #define SUB_SIZE 3
 #define UNASSINGED 0
